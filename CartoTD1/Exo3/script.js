@@ -1,38 +1,43 @@
 
 let isLoaded = false
+let orientationEvent = {}
+let motionEvent = {}
 
 window.addEventListener("load", (event) => {
     isLoaded = true
 })
 
 window.addEventListener('devicemotion', (event) => {
+    motionEvent = event
     if(isLoaded){
-        writeMotionHTML(event)
+        startRefreshHTML()
     }
 })
 
 window.addEventListener("deviceorientation", (event) => {
+    orientationEvent = event
     if(isLoaded){
-        writeOrientationHTML(event)
+        startRefreshHTML()
     }
 })
 
-function writeOrientationHTML(orientationEvent){
-    document.getElementById("orientation").innerHTML = 
+function startRefreshHTML(){
+    writeMotionHTML()
+    setTimeout( writeMotionHTML, 1000)
+}
+
+
+function writeMotionHTML(){
+    document.getElementById("content").innerHTML = 
     "<h3>Orientation</h3>" +
     "<ul>" + 
         `<li>alpha : ${orientationEvent.alpha}</li>` +
         `<li>beta : ${orientationEvent.beta}</li>` +
         `<li>gamma : ${orientationEvent.gamma}</li>` +
-    "</ul>"
-}
-
-
-function writeMotionHTML(motionEvent){
-    document.getElementById("motion").innerHTML = 
+    "</ul>" + 
     "<h3>Mouvement</h3>" +
     "<ul>" + 
-        `<li>acceleration : ${motionEvent.acceleration}</li>` +
+        `<li>acceleration : </li>` +
             "<ul>" + 
                 `<li>x : ${motionEvent.acceleration.x}</li>` +
                 `<li>y : ${motionEvent.acceleration.y}</li>` +
@@ -45,6 +50,12 @@ function writeMotionHTML(motionEvent){
                 `<li>gamma : ${motionEvent.rotationRate.gamma}</li>` +
             '</ul>' +
         `</li>` +
-        `<li>translation : ${motionEvent.accelerationIncludingGravity}</li>` +
+        `<li>translation : ` +
+            "<ul>" + 
+                `<li>x : ${motionEvent.accelerationIncludingGravity.x}</li>` +
+                `<li>y : ${motionEvent.accelerationIncludingGravity.y}</li>` +
+                `<li>z : ${motionEvent.accelerationIncludingGravity.z}</li>` +
+            '</ul>' +
+        "</li>" +
     "</ul>"
 }

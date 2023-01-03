@@ -11,7 +11,7 @@ function getCurrentPosition() {
     }
   
     function error() {
-        document.getElementById("content").innerHTML = "Unable to retrieve your location"
+        document.getElementById("content").innerHTML = "Please active your GPS"
     }
   
     if (!navigator.geolocation) {
