@@ -25,13 +25,13 @@ function getCurrentPosition() {
 
 function writeHTML(position){
     document.getElementById("content").innerHTML = 
-    "<h2>Position</h2>" +
+    "<h3>Position</h3>" +
     "<ul>" + 
         `<li>longitude : ${position.coords.longitude}</li>` +
         `<li>latitude : ${position.coords.latitude}</li>` +
         `<li>altitude : ${position.coords.altitude}</li>` +
     "</ul>" +
-    `<h2>Precision de mesure : ${position.coords.accuracy } </h2>` +
-    `<h2>Vitesse : ${position.coords.speed }</h2>` +
-    `<h2>Date à partir du time stamp : ${date}</h2>`
+    `<h3>Precision de mesure : ${position.coords.accuracy } </h3>` +
+    `<h3>Vitesse : ${position.coords.speed }</h3>` +
+    `<h3>Date à partir du time stamp : ${date}</h3>`
 }
