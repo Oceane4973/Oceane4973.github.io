@@ -6,6 +6,8 @@ window.addEventListener("load", (event) => {
 function getCurrentPosition() {
   
     function success(position) {
+
+        console.log(position)
         writeHTML(position)
     }
   
