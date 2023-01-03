@@ -7,8 +7,9 @@ window.addEventListener("load", (event) => {
 function getCurrentPosition() {
   
     function success(position) {
-        writeHTML(position, new Date())
-        setTimeout( getCurrentPosition, 3000)
+        writeHTML(position, new Date().format('m-d-Y h:i:s')
+        )
+        setTimeout( getCurrentPosition, 15000)
     }
   
     function error() {
@@ -23,7 +24,7 @@ function getCurrentPosition() {
     }
   }
 
-function writeHTML(position){
+function writeHTML(position, date){
     document.getElementById("content").innerHTML = 
     "<h3>Position</h3>" +
     "<ul>" + 
