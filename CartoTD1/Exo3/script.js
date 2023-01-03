@@ -9,7 +9,7 @@ window.addEventListener("load", (event) => {
     configData.pageIsLoaded = true
     setTimeout( 
         function(){ 
-            writeHTML(configData.orientationEvent, configData.motionEvent)
+            writeHTML()
         }, 1000)
 })
 
@@ -22,7 +22,9 @@ window.addEventListener("deviceorientation", (event) => {
 })
 
 
-function writeHTML(orientationEvent, motionEvent){
+function writeHTML(){
+    const orientationEvent = configData.orientationEvent
+    const motionEvent = configData.motionEvent
     document.getElementById("content").innerHTML = 
     "<h3>Orientation</h3>" +
     "<ul>" + 
