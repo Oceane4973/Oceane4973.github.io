@@ -22,7 +22,7 @@ window.addEventListener("deviceorientation", (event) => {
 })
 
 
-function writeMotionHTML(orientationEvent, motionEvent){
+function writeHTML(orientationEvent, motionEvent){
     document.getElementById("content").innerHTML = 
     "<h3>Orientation</h3>" +
     "<ul>" + 
