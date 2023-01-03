@@ -7,18 +7,16 @@ let configData = {
 
 window.addEventListener("load", (event) => {
     configData.pageIsLoaded = true
-    setTimeout( 
-        function(){ 
-            writeHTML()
-        }, 1000)
 })
 
 window.addEventListener('devicemotion', (event) => {
     configData.motionEvent = event
+    writeHTML()
 })
 
 window.addEventListener("deviceorientation", (event) => {
     configData.orientationEvent = event
+    writeHTML()
 })
 
 
