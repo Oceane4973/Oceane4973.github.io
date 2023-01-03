@@ -1,15 +1,13 @@
 
 window.addEventListener("load", (event) => {
-
     getCurrentPosition()
 })
 
 function getCurrentPosition() {
   
     function success(position) {
-        writeHTML(position, new Date().format('m-d-Y h:i:s')
-        )
-        setTimeout( getCurrentPosition, 15000)
+        writeHTML(position, new Date())
+        setTimeout( getCurrentPosition, 5000)
     }
   
     function error() {
