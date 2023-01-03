@@ -1,33 +1,28 @@
 
-let isLoaded = false
-let orientationEvent = {}
-let motionEvent = {}
+let configData = {
+    pageIsLoaded : false,
+    orientationEvent : {},
+    motionEvent : {}
+}
 
 window.addEventListener("load", (event) => {
-    isLoaded = true
+    configData.pageIsLoaded = true
+    setTimeout( 
+        function(){ 
+            writeHTML(configData.orientationEvent, configData.motionEvent)
+        }, 1000)
 })
 
 window.addEventListener('devicemotion', (event) => {
-    motionEvent = event
-    if(isLoaded){
-        startRefreshHTML()
-    }
+    configData.motionEvent = event
 })
 
 window.addEventListener("deviceorientation", (event) => {
-    orientationEvent = event
-    if(isLoaded){
-        startRefreshHTML()
-    }
+    configData.orientationEvent = event
 })
 
-function startRefreshHTML(){
-    writeMotionHTML()
-    setTimeout( writeMotionHTML, 1000)
-}
 
-
-function writeMotionHTML(){
+function writeMotionHTML(orientationEvent, motionEvent){
     document.getElementById("content").innerHTML = 
     "<h3>Orientation</h3>" +
     "<ul>" + 
