@@ -1,14 +1,14 @@
 
 window.addEventListener("load", (event) => {
+
     getCurrentPosition()
 })
 
 function getCurrentPosition() {
   
     function success(position) {
-
-        console.log(position)
-        writeHTML(position)
+        writeHTML(position, new Date())
+        setTimeout( getCurrentPosition, 3000)
     }
   
     function error() {
@@ -29,9 +29,9 @@ function writeHTML(position){
     "<ul>" + 
         `<li>longitude : ${position.coords.longitude}</li>` +
         `<li>latitude : ${position.coords.latitude}</li>` +
-        "<li>altitude : </li>" +
+        `<li>altitude : ${position.coords.altitude}</li>` +
     "</ul>" +
-    "<h2>Precision de mesure : </h2>" +
-    "<h2>Vitesse : </h2>" +
-    "<h2>Date à partir du time stamp : </h2>"
+    `<h2>Precision de mesure : ${position.coords.accuracy } </h2>` +
+    `<h2>Vitesse : ${position.coords.speed }</h2>` +
+    `<h2>Date à partir du time stamp : ${date}</h2>`
 }
