@@ -8,12 +8,12 @@ let coords = {
 
 window.addEventListener("load", (event) => {
     map = L.map('map').setView(coords.Bermudes[0], 5)
-    L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+    L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
         attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
         minZoom: 1,
         maxZoom: 20
     }).addTo(map)
-    map.addLayer(new L.StamenTileLayer("toner"))
+
     
     L.polygon(coords.Bermudes, {color : 'red', fillColor : 'red', fillOpacity : 0.5}).bindPopup("Triangle des Bermudes").addTo(map)
     L.polygon([coords.Marseille, coords.Nice]).addTo(map)
