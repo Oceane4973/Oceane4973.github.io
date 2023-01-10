@@ -34,7 +34,7 @@ function getCurrentPosition() {
             color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5,
-            radius: 500
+            radius: position.coords.accuracy
         }).addTo(map)
 
         window.alert(`Distance entre Nice - Marseille : ${distance(coords.Marseille, coords.Nice)} km`)
