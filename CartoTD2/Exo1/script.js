@@ -7,7 +7,7 @@ function setUpMap() {
   
     function success(position) {
         if(position == undefined){
-            setTimeout( getCurrentPosition, 5000)
+            setTimeout(setUpMap, 500)
             return
         }
 
