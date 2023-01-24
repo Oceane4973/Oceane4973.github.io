@@ -48,19 +48,29 @@
      requestAnimationFrame(animate)
      renderer.render(scene, camera)
  }
-
-
+/*
+ document.addEventListener( 'mousemove', (event)=>{
+    var mouseX = event.clientX - halfWidth;
+    var mouseY = event.clientY - halfHeight;
+    if(mouseX - camera.position.x > 0){
+        mesh.rotation.y -= 0.005;
+    }else {
+        mesh.rotation.y += 0.005;
+    }
+    
+    renderer.render( scene, camera );
+ }, false );
+ */
+ 
 window.addEventListener("deviceorientation", (e)=>{
     let alpha = e.alpha
-    let beta = e.beta
 
     if(mesh){
         mesh.rotation.y = alpha * (Math.PI /180)
-        mesh.rotation.x = (beta-90) * (Math.PI /180)
         animate()
     }
 }, true)
- 
+
  
  animate()
 
@@ -72,6 +82,7 @@ window.addEventListener("deviceorientation", (e)=>{
             map : texture
         })
         mesh = new THREE.Mesh(geometry, material)
+        mesh.name = "test_name"
         scene.add(mesh)
         camera.position.z = 5
         camera.position.y = 0
@@ -93,7 +104,7 @@ window.addEventListener("deviceorientation", (e)=>{
  })
 
  function removeEntity(object) {
-    var selectedObject = scene.getObjectByName(object.name)
-    scene.remove( selectedObject )
-    animate()
+    var selectedObject = scene.getObjectByName(object.name);
+    scene.remove( selectedObject );
+    animate();
 }
