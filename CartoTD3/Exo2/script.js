@@ -49,12 +49,11 @@
      renderer.render(scene, camera)
  }
 
- const lastOrientation = 0
- document.addEventListener( 'deviceorientation', (event)=>{
-    lastOrientation = orientationEvent.beta
+ const lastRotation = 0
+ document.addEventListener( 'devicemotion', (event)=>{
+    lastRotation = orientationEvent.beta
     if(mesh) {
-        mesh.rotation.y -= orientationEvent.beta - lastOrientation;
- 
+        mesh.rotation.y += motionEvent.rotationRate.alpha - lastRotation;
         renderer.render( scene, camera );
     }
  }, false );
