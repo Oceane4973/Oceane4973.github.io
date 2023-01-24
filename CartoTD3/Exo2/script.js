@@ -49,14 +49,17 @@
      renderer.render(scene, camera)
  }
 
- const lastRotation = 0
- document.addEventListener( 'devicemotion', (event)=>{
-    lastRotation = orientationEvent.beta
-    if(mesh) {
-        mesh.rotation.y += motionEvent.rotationRate.alpha - lastRotation;
-        renderer.render( scene, camera );
+
+window.addEventListener("deviceorientation", (e)=>{
+    let alpha = e.alpha
+    let beta = e.beta
+
+    if(mesh){
+        mesh.rotation.y = alpha * (Math.PI /180)
+        mesh.rotation.x = (beta-90) * (Math.PI /180)
+        animate()
     }
- }, false );
+}, true)
  
  
  animate()
@@ -90,7 +93,7 @@
  })
 
  function removeEntity(object) {
-    var selectedObject = scene.getObjectByName(object.name);
-    scene.remove( selectedObject );
-    animate();
+    var selectedObject = scene.getObjectByName(object.name)
+    scene.remove( selectedObject )
+    animate()
 }
