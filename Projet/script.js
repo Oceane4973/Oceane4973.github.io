@@ -8,12 +8,15 @@ import { FBXLoader } from 'FBXLoad'
 let scene, camera, renderer, spiderMesh, clips, mixer, canva
 let isInit = false
 
+const cameraZ = 200/1314
+
 window.addEventListener('resize', ()=> {
     if(!isInit){
         return
     }
     camera.aspect = window.innerWidth / window.innerHeight
     camera.updateProjectionMatrix()
+    camera.lookAt(scene.position)
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.render(scene, camera)
 })
@@ -26,15 +29,16 @@ window.addEventListener('load', ()=>{
     scene.background = new THREE.Color("rgba(0,0,0,1)")
 
     camera = new THREE.PerspectiveCamera(45, canva.offsetWidth/canva.offsetHeight, 0.1, 1000)
-    camera.position.z = -canva.offsetWidth/9
+    camera.position.z = -200
     camera.position.y = 180
+    console.log(canva.offsetWidth + "   " + canva.offsetWidth/canva.offsetHeight + "   " + canva.offsetHeight + "   " + canva.offsetHeight/canva.offsetWidth)
     camera.lookAt(scene.position)
     
     scene.add(camera)
 
     scene.add(new THREE.GridHelper(260, 10));
 
-    renderer = new THREE.WebGLRenderer()
+    renderer = new THREE.WebGLRenderer({ antialias : true })
     renderer.setSize(canva.offsetWidth, canva.offsetHeight)
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.autoClear = false
@@ -105,7 +109,6 @@ window.addEventListener('load', ()=>{
             console.log(object.animations)            
             scene.add(spiderMesh)
             clips.walk()
-            spiderMesh.position.x = 100
         },
         (xhr) => {
             console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
@@ -129,7 +132,8 @@ function animate() {
 }
 
 function moveTo(X, Y){
-    const limite = 100
+    const limite = window.innerWidth/12
+    console.log(limite)
     
     if(!((spiderMesh.position.x >= limite && X > 0) ||
         (spiderMesh.position.x <= -limite && X < 0))){
