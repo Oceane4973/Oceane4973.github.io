@@ -48,19 +48,6 @@
      requestAnimationFrame(animate)
      renderer.render(scene, camera)
  }
-/*
- document.addEventListener( 'mousemove', (event)=>{
-    var mouseX = event.clientX - halfWidth;
-    var mouseY = event.clientY - halfHeight;
-    if(mouseX - camera.position.x > 0){
-        mesh.rotation.y -= 0.005;
-    }else {
-        mesh.rotation.y += 0.005;
-    }
-    
-    renderer.render( scene, camera );
- }, false );
- */
  
 window.addEventListener("deviceorientation", (e)=>{
     let alpha = e.alpha
