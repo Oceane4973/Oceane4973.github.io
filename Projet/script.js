@@ -31,7 +31,7 @@ if(detectMob()){
         if(Math.abs(event.beta)>90) g = -g
 
         var x = g/Math.max(0.25,b)
-        body.innerHTML = x
+        alert(x)
     })
 } else {
     window.onkeydown = function(e) {
