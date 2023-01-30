@@ -37,7 +37,8 @@ if(detectMob()){
         smoothx = smoothx*0.7+x*0.3
 
         if(debugLog){
-            debugLog.innerHTML = smoothx
+            debugLog.innerHTML = spiderMesh.position.x + " " + spiderMesh.position.y
+            
         }
     
         moveTo(smoothx.toFixed(1), 0.4*(smoothx/Math.abs(smoothx)))
