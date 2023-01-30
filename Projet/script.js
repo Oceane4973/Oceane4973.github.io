@@ -36,7 +36,7 @@ if(detectMob()){
         var x = g/Math.max(0.25,b)
         smoothx = smoothx*0.7+x*0.3
 
-        console.log("move to " + smoothx)
+        alert("move to " + smoothx)
         moveTo(smoothx.toFixed(1), 0.4*(smoothx/abs(smoothx)))
     })
 } else {
