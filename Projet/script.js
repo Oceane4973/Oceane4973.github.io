@@ -5,6 +5,8 @@ import { OBJLoader } from 'OBJLoad'
 import { FBXLoader } from 'FBXLoad'
 //import { Stats } from 'stats'
  
+var smoothx = 0
+
 let scene, camera, renderer, spiderMesh, clips, mixer, canva
 let isInit = false
 
@@ -31,7 +33,9 @@ if(detectMob()){
         if(Math.abs(event.beta)>90) g = -g
 
         var x = g/Math.max(0.25,b)
-        alert(x)
+        smoothx = smoothx*0.7+x*0.3
+
+        moveTo(smoothx.toFixed(1), 0.4*(smoothx/abs(smoothx)))
     })
 } else {
     window.onkeydown = function(e) {
@@ -182,5 +186,11 @@ function moveTo(X, Y){
 }
 
 function detectMob() {
-    return ( ( window.innerWidth <= 800 ) && ( window.innerHeight <= 600 ) )
+    return (navigator.userAgent.match(/Android/i)
+    || navigator.userAgent.match(/webOS/i)
+    || navigator.userAgent.match(/iPhone/i)
+    || navigator.userAgent.match(/iPad/i)
+    || navigator.userAgent.match(/iPod/i)
+    || navigator.userAgent.match(/BlackBerry/i)
+    || navigator.userAgent.match(/Windows Phone/i))
 }
