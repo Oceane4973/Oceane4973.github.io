@@ -17,11 +17,20 @@
         height: 100vh;
         flex-direction: column;
     }
+    #log {
+      position: absolute;
+      top : 0px;
+      z-index : 3;
+      background-color: white;
+      font-size: 60px;
+    }
   </style>
 </head>
 <body>
   
 <div id="canvas"></div>
+
+<div id="log"></div>
 <script type="importmap">
   {
     "imports": {

@@ -10,7 +10,7 @@ var smoothx = 0
 let scene, camera, renderer, spiderMesh, clips, mixer, canva
 let isInit = false
 
-const cameraZ = 200/1314
+let debugLog
 
 window.addEventListener('resize', ()=> {
     if(!isInit){
@@ -36,7 +36,10 @@ if(detectMob()){
         var x = g/Math.max(0.25,b)
         smoothx = smoothx*0.7+x*0.3
 
-        
+        if(debugLog){
+            debugLog.innerHTML = smoothx
+        }
+    
         moveTo(smoothx.toFixed(1), 0.4*(smoothx/Math.abs(smoothx)))
     })
 } else {
@@ -62,6 +65,7 @@ if(detectMob()){
 
 window.addEventListener('load', ()=>{
     canva = document.getElementById('canvas')
+    debugLog = document.getElementById('log')
 
     scene =  new THREE.Scene()
     scene.background = new THREE.Color("rgba(0,0,0,1)")
