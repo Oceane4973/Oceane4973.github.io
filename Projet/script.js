@@ -21,6 +21,37 @@ window.addEventListener('resize', ()=> {
     renderer.render(scene, camera)
 })
 
+//configure command game
+if(detectMob()){
+    window.addEventListener("deviceorientation", (event) => {
+        var b = Math.abs(event.beta)/90
+        if(b>1) b = 2-b
+
+        var g = event.gamma/90
+        if(Math.abs(event.beta)>90) g = -g
+
+        var x = g/Math.max(0.25,b)
+        body.innerHTML = x
+    })
+} else {
+    window.onkeydown = function(e) {
+        switch (e.keyCode) {
+            case 37:
+                moveTo(2, 0.4)
+                break
+            case 39:
+                moveTo(-2, -0.4)
+                break
+        }
+    }
+    
+    window.onkeyup = function(e){
+        if(e.keyCode == 37 || e.keyCode == 39){
+            spiderMesh.rotation.y = 0
+        }
+    }
+}
+
 
 window.addEventListener('load', ()=>{
     canva = document.getElementById('canvas')
@@ -36,7 +67,7 @@ window.addEventListener('load', ()=>{
     
     scene.add(camera)
 
-    scene.add(new THREE.GridHelper(260, 10));
+    scene.add(new THREE.GridHelper(300, 10))
 
     renderer = new THREE.WebGLRenderer({ antialias : true })
     renderer.setSize(canva.offsetWidth, canva.offsetHeight)
@@ -57,13 +88,13 @@ window.addEventListener('load', ()=>{
         (object) => {
             object.traverse( function ( child ) {
                 if ( child.isMesh ) {
-                    const oldMat = child.material;
+                    const oldMat = child.material
                     child.material = new THREE.MeshLambertMaterial( {  
                        color: oldMat.color,
-                    });
+                    })
                 }
             })
-            object.position.set(0,0,0);
+            object.position.set(0,0,0)
             spiderMesh = object 
 
             //animation
@@ -132,7 +163,7 @@ function animate() {
 }
 
 function moveTo(X, Y){
-    const limite = window.innerWidth/12
+    const limite = window.innerWidth/16 //window.innerWidth * 0.0002645833 
     console.log(limite)
     
     if(!((spiderMesh.position.x >= limite && X > 0) ||
@@ -150,19 +181,6 @@ function moveTo(X, Y){
     }
 }
 
-window.onkeydown = function(e) {
-    switch (e.keyCode) {
-        case 37:
-            moveTo(2, 0.4)
-            break;
-        case 39:
-            moveTo(-2, -0.4)
-            break;
-    }
-};
-
-window.onkeyup = function(e){
-    if(e.keyCode == 37 || e.keyCode == 39){
-        spiderMesh.rotation.y = 0
-    }
+function detectMob() {
+    return ( ( window.innerWidth <= 800 ) && ( window.innerHeight <= 600 ) )
 }
