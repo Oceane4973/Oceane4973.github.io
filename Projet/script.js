@@ -36,10 +36,11 @@ if(detectMob()){
         var x = g/Math.max(0.25,b)
         smoothx = smoothx*0.7+x*0.3
 
-        alert("move to " + smoothx)
-        moveTo(smoothx.toFixed(1), 0.4*(smoothx/abs(smoothx)))
+        
+        moveTo(smoothx.toFixed(1), 0.4*(smoothx/Math.abs(smoothx)))
     })
 } else {
+    console.log("on laptop")
     window.onkeydown = function(e) {
         switch (e.keyCode) {
             case 37:
@@ -145,7 +146,7 @@ window.addEventListener('load', ()=>{
             }
             console.log(object.animations)            
             scene.add(spiderMesh)
-            clips.walk()
+            //clips.walk()
         },
         (xhr) => {
             console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
