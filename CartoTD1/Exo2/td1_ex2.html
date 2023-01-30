@@ -1,11 +1,26 @@
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8">
-  <title>Geocalisation et Cartographie</title>
-  <script src="./script.js"></script>
-</head>
-<body>
-    <div id="content"></div>
-</body>
+<!DOCTYPE html>
+<html>
+    <head><meta name="viewport" content="width=1000,user-scalable=no"/></head>
+    <body style="margin:0">
+        <pre id="log" style="font-size:4em;"></pre>
+        <div id="box" style="background:#69c;width:100px;height:100px;position:relative;left:450px"></div>
+        <script>
+            var box = document.getElementById("box");
+            var log = document.getElementById("log");
+            var smoothx = 0;
+            window.addEventListener("deviceorientation", function(event){
+                var b = Math.abs(event.beta)/90;
+                if(b>1) b = 2-b;
+
+                var g = event.gamma/90;
+                if(Math.abs(event.beta)>90) g = -g;
+
+                var x = g/Math.max(0.25,b);
+                smoothx = smoothx*0.7+x*0.3;
+
+                box.style.left = Math.max(0, Math.min(900, smoothx*500+450))+"px";
+                log.innerText = x.toFixed(1)+"\n"+smoothx.toFixed(1);
+            });
+        </script>
+    </body>
 </html>

@@ -23,14 +23,6 @@ function writeHTML(){
     const orientationEvent = configData.orientationEvent
     const motionEvent = configData.motionEvent
 
-    var b = Math.abs(orientationEvent.beta)/90
-        if(b>1) b = 2-b
-
-        var g = orientationEvent.gamma/90
-        if(Math.abs(orientationEvent.beta)>90) g = -g
-
-        var x = g/Math.max(0.25,b)
-    
 
     document.getElementById("content").innerHTML = 
     "<h3>Orientation</h3>" +
@@ -60,7 +52,6 @@ function writeHTML(){
                 `<li>y : ${motionEvent.accelerationIncludingGravity.y}</li>` +
                 `<li>z : ${motionEvent.accelerationIncludingGravity.z}</li>` +
             '</ul>' +
-            `${x}` +
         "</li>" +
     "</ul>"
 }
