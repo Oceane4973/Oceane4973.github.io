@@ -27,12 +27,12 @@ window.addEventListener('resize', ()=> {
 if(detectMob()){
     console.log("on mobile")
     window.addEventListener("deviceorientation", (event) => {
-        var b = Math.abs(event.beta)/90
+        /*var b = Math.abs(event.beta)/90
         if(b>1) b = 2-b
         var g = event.gamma/90
         if(Math.abs(event.beta)>90) g = -g
         var x = g/Math.max(0.25,b)
-        smoothx = smoothx*0.7+x*0.3
+        smoothx = smoothx*0.7+x*0.3*/
         //moveTo(smoothx.toFixed(1), 0.4*(smoothx/Math.abs(smoothx)))
         /*if(debugLog){
             debugLog.value = spiderMesh.position.x + " " + spiderMesh.position.y
