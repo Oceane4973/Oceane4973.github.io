@@ -33,10 +33,10 @@ if(detectMob()){
         if(Math.abs(event.beta)>90) g = -g
         var x = g/Math.max(0.25,b)
         smoothx = smoothx*0.7+x*0.3
-        moveTo(smoothx.toFixed(1), 0.4*(smoothx/Math.abs(smoothx)))
-        if(debugLog){
+        //moveTo(smoothx.toFixed(1), 0.4*(smoothx/Math.abs(smoothx)))
+        /*if(debugLog){
             debugLog.value = spiderMesh.position.x + " " + spiderMesh.position.y
-        }
+        }*/
     })
 } else {
     console.log("on laptop")
@@ -101,7 +101,7 @@ window.addEventListener('load', ()=>{
                     })
                 }
             })
-            object.position.set(0,0,0)
+            object.position.set(20,0,0)
             spiderMesh = object 
 
             //animation
