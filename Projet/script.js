@@ -175,7 +175,7 @@ function animate() {
 }
 
 function moveTo(X, Y){
-    const limite = 40 //window.innerWidth * 0.0002645833 
+    const limite = 20 //window.innerWidth * 0.0002645833 
     console.log(limite)
     
     if(!((spiderMesh.position.x >= limite && X > 0) ||
