@@ -1,5 +1,3 @@
-
-
 import * as THREE from 'three'
 import { OBJLoader } from 'OBJLoad'
 import { FBXLoader } from 'FBXLoad'
@@ -9,8 +7,6 @@ var smoothx = 0
 
 let scene, camera, renderer, spiderMesh, clips, mixer, canva
 let isInit = false
-
-let debugLog
 
 window.addEventListener('resize', ()=> {
     if(!isInit){
@@ -27,16 +23,14 @@ window.addEventListener('resize', ()=> {
 if(detectMob()){
     console.log("on mobile")
     window.addEventListener("deviceorientation", (event) => {
-        /*var b = Math.abs(event.beta)/90
+        var b = Math.abs(event.beta)/90
         if(b>1) b = 2-b
         var g = event.gamma/90
         if(Math.abs(event.beta)>90) g = -g
         var x = g/Math.max(0.25,b)
-        smoothx = smoothx*0.7+x*0.3*/
-        //moveTo(smoothx.toFixed(1), 0.4*(smoothx/Math.abs(smoothx)))
-        /*if(debugLog){
-            debugLog.value = spiderMesh.position.x + " " + spiderMesh.position.y
-        }*/
+        smoothx = smoothx*0.7+x*0.3
+        moveTo(smoothx.toFixed(1), 0.4*(smoothx/Math.abs(smoothx)))
+        console.log(spiderMesh.position)
     })
 } else {
     console.log("on laptop")
@@ -61,7 +55,6 @@ if(detectMob()){
 
 window.addEventListener('load', ()=>{
     canva = document.getElementById('canvas')
-    debugLog = document.getElementById('log')
 
     scene =  new THREE.Scene()
     scene.background = new THREE.Color("rgba(0,0,0,1)")
@@ -101,7 +94,7 @@ window.addEventListener('load', ()=>{
                     })
                 }
             })
-            object.position.set(20,0,0)
+            object.position.set(0,0,0)
             spiderMesh = object 
 
             //animation
