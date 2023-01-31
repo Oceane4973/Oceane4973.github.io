@@ -94,7 +94,8 @@ window.addEventListener('load', ()=>{
                     })
                 }
             })
-            object.position.set(0,0,0)
+
+            object.position.set(0,0,-70)
             spiderMesh = object 
 
             //animation
