@@ -2,40 +2,34 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
   <title>Geocalisation et Cartographie</title>
-  <style>
-    *  {
-      overflow-y: hidden;
-      overflow-x: hidden; 
-      padding : 0px;
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none; 
-    }
-    #canvas {
-        display: flex;
-        width: 100%;
-        height: 100vh;
-        flex-direction: column;
-    }
-  </style>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
   
 <div id="canvas"></div>
+
+<div class="modal" id="modal">
+  <p class="message">Voulez-vous jouer ? </p>
+  <div class="options">
+    <button class="btn" id="play">Oui</button>
+    <button class="btn">Non</button>
+  </div>
+</div>
+
 <script type="importmap">
   {
     "imports": {
       "three": "https://unpkg.com/three@0.148.0/build/three.module.js",
-      "OBJLoad": "https://unpkg.com/three@0.148.0/examples/jsm/loaders/OBJLoader.js",
-      "FBXLoad" : "https://unpkg.com/three@0.148.0/examples/jsm/loaders/FBXLoader.js",
-      "orbitcontrols" : "https://unpkg.com/three@0.148.0/examples/jsm/controls/OrbitControls.js"
+      "FBXLoad" : "https://unpkg.com/three@0.148.0/examples/jsm/loaders/FBXLoader.js"
     }
   }
 </script>
 
 <!--"stats" : 'https://unpkg.com/three@0.148.0/examples/jsm/libs/stats.module.js'-->
 
-<script type="module" src="script.js"></script>
+<script type="module" src="./script.js"></script>
 
 </body>
 <html>
