@@ -48,7 +48,7 @@ if(detectMob()){
         if(Math.abs(event.beta)>90) g = -g
         let x = g/Math.max(0.25,b)
         smoothx = smoothx*0.7+x*0.3
-        moveTo(-smoothx*2, -0.4*(smoothx/Math.abs(smoothx)))
+        moveTo(smoothx*2, -0.4*(smoothx/Math.abs(smoothx)))
         console.log(spiderMesh.position)
     })
 } else {
@@ -189,13 +189,15 @@ function moveTo(X, Y){
 to know if the game is on mobile or on laptop
 */
 function detectMob() {
-    return (navigator.userAgent.match(/Android/i)
-    || navigator.userAgent.match(/webOS/i)
-    || navigator.userAgent.match(/iPhone/i)
-    || navigator.userAgent.match(/iPad/i)
-    || navigator.userAgent.match(/iPod/i)
-    || navigator.userAgent.match(/BlackBerry/i)
-    || navigator.userAgent.match(/Windows Phone/i))
+    return (
+        navigator.userAgent.match(/Android/i)
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/iPhone/i)
+        || navigator.userAgent.match(/iPad/i)
+        || navigator.userAgent.match(/iPod/i)
+        || navigator.userAgent.match(/BlackBerry/i)
+        || navigator.userAgent.match(/Windows Phone/i)
+    )
 }
 
 /*
