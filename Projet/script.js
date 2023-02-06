@@ -1,18 +1,34 @@
+/* IMPORT */
+
 import * as THREE from 'three'
 import { FBXLoader } from 'FBXLoad'
-//import { Stats } from 'stats'
- 
-var smoothx = 0
 
-let scene, camera, renderer, spiderMesh, clips, mixer, canva, limit, radiusObstacle
-let isInit = false
-let game = false
-let obstacleToRemove
+
+/* VARIABLE  */
+
+const clock = new THREE.Clock()
+const fbxLoader = new FBXLoader()
+let scene, 
+camera, 
+renderer, 
+spiderMesh, 
+clips, 
+mixer, 
+canva, 
+limit, 
+radiusObstacle, 
+isInit = false, 
+game = false, 
+obstacleToRemove,
+smoothx = 0,
+XObstacle,
+ZObstacle
+
+
+/* RESIZE EVENT */
 
 window.addEventListener('resize', ()=> {
-    if(!isInit){
-        return
-    }
+    if(!isInit){ return }
     camera.aspect = window.innerWidth / window.innerHeight
     camera.updateProjectionMatrix()
     camera.lookAt(scene.position)
@@ -20,25 +36,24 @@ window.addEventListener('resize', ()=> {
     renderer.render(scene, camera)
 })
 
-//configure command game
+/* COMMAND CONFIGURATION AND OTHER EVENT MANAGEMENT */
+
 if(detectMob()){
-    console.log("on mobile")
     limit = 25
     radiusObstacle = 15
     window.addEventListener("deviceorientation", (event) => {
-        var b = Math.abs(event.beta)/90
+        let b = Math.abs(event.beta)/90
         if(b>1) b = 2-b
-        var g = event.gamma/90
+        let g = event.gamma/90
         if(Math.abs(event.beta)>90) g = -g
-        var x = g/Math.max(0.25,b)
+        let x = g/Math.max(0.25,b)
         smoothx = smoothx*0.7+x*0.3
-        moveTo(smoothx, -0.4*(smoothx/Math.abs(smoothx)))
+        moveTo(-smoothx*2, 0.4*(smoothx/Math.abs(smoothx)))
         console.log(spiderMesh.position)
     })
 } else {
     limit = 100
     radiusObstacle = 50
-    console.log("on laptop")
     window.onkeydown = function(e) {
         switch (e.keyCode) {
             case 37:
@@ -49,17 +64,19 @@ if(detectMob()){
                 break
         }
     }
-    
-    window.onkeyup = function(e){
-        if(e.keyCode == 37 || e.keyCode == 39){
-            spiderMesh.rotation.y = 0
-        }
-    }
+    window.onkeyup = function(e){ if(e.keyCode == 37 || e.keyCode == 39){ spiderMesh.rotation.y = 0 }}
 }
 
 
+document.getElementById('play').addEventListener('click', ()=>{ restart()})
+
+
+/* CONFIGURATION WHEN PAGE IS LOADED */
+
 window.addEventListener('load', ()=>{
     canva = document.getElementById('canvas')
+
+    //Create scene, renderer, camera and ambiance light
 
     scene =  new THREE.Scene()
     scene.background = new THREE.Color("rgba(255,255,255)")
@@ -67,14 +84,13 @@ window.addEventListener('load', ()=>{
     camera = new THREE.PerspectiveCamera(45, canva.offsetWidth/canva.offsetHeight, 0.1, 1000)
     camera.position.z = -200
     camera.position.y = 180
-    console.log(canva.offsetWidth + "   " + canva.offsetWidth/canva.offsetHeight + "   " + canva.offsetHeight + "   " + canva.offsetHeight/canva.offsetWidth)
     camera.lookAt(scene.position)
     scene.add(camera)
     
     renderer = new THREE.WebGLRenderer({ antialias : true })
     renderer.setSize(canva.offsetWidth, canva.offsetHeight)
     renderer.setPixelRatio(window.devicePixelRatio)
-    renderer.autoClear = false
+    renderer.autoClear = true // A REMETTRE A FALSE SI NECESSAIRE
     renderer.setClearColor(0x00000, 0.0)
     canva.appendChild(renderer.domElement)
 
@@ -84,23 +100,22 @@ window.addEventListener('load', ()=>{
     scene.add(ambianceLight)
     scene.add(pointerlight)
 
-    const fbxLoader = new FBXLoader()
+    //Load the model
+
     fbxLoader.load(
         'models/spider.fbx',
         (object) => {
             object.traverse( function ( child ) {
                 if ( child.isMesh ) {
-                    const oldMat = child.material
-                    child.material = new THREE.MeshLambertMaterial( {  
-                       color: new THREE.Color("purple"),
-                    })
+                    child.material = new THREE.MeshLambertMaterial({ color: new THREE.Color("purple") })
                 }
             })
 
             object.position.set(0,0,-70)
             spiderMesh = object 
 
-            //animation
+            //stock animations
+
             mixer = new THREE.AnimationMixer(spiderMesh)
             clips = {
                 walk : function(){ 
@@ -143,37 +158,36 @@ window.addEventListener('load', ()=>{
             scene.add(spiderMesh)
             clips.walk()
             isInit = true
-            //generateObstacles() //seulement quand le jeu commence
         },
-        (xhr) => {
-            console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
-        },
-        (error) => {
-            console.log(error)
-        }
+        (xhr) => { console.log((xhr.loaded / xhr.total) * 100 + '% loaded')},
+        (error) => { console.log(error)}
     )
     renderer.render(scene, camera)
     animate()
 })
 
+/* FUNCTION PARTITION */
+
+/*
+to move the spider model
+*/
 function moveTo(X, Y){    
     if(game){
         if(!((spiderMesh.position.x >= limit && X > 0) ||
             (spiderMesh.position.x <= -limit && X < 0))){
             spiderMesh.position.x += X
-        } else {
-            console.log("limite")
-        }
+        } else { console.log("limite") }
         if(spiderMesh.rotation.y != Y){
-            if(spiderMesh.rotation.y > Y){
-                spiderMesh.rotation.y -= 0.2
-            }else{
-                spiderMesh.rotation.y += 0.2
-            }
+            if(spiderMesh.rotation.y > Y){ spiderMesh.rotation.y -= 0.2}
+            else{ spiderMesh.rotation.y += 0.2 }
         }
     }
 }
 
+
+/*
+to know if the game is on mobile or on laptop
+*/
 function detectMob() {
     return (navigator.userAgent.match(/Android/i)
     || navigator.userAgent.match(/webOS/i)
@@ -184,8 +198,9 @@ function detectMob() {
     || navigator.userAgent.match(/Windows Phone/i))
 }
 
-let XObstacle 
-let ZObstacle
+/*
+to generate and display obstacles
+*/
 function generateObstacles(){
     if( game){
         ZObstacle = 350
@@ -226,8 +241,12 @@ function generateObstacles(){
             wireframe: true
           });
           */
-        const sphere = new THREE.Mesh( geometry, material );
-        XObstacle = getRandomX(-limit, limit)
+        const sphere = new THREE.Mesh( geometry, material )
+        if(detectMob()){ 
+            if(getRandomX(0,1)==0){ XObstacle = -limit } 
+            else { XObstacle = limit }
+        }
+        else { XObstacle = getRandomX(-limit, limit)}
         sphere.position.set(XObstacle,0,ZObstacle)
         scene.add( sphere )
         moveObstacles(sphere)
@@ -235,8 +254,11 @@ function generateObstacles(){
     }
 }
 
+/*
+to move obstacle model
+*/
 function moveObstacles(obstacle){
-    if( game){
+    if(game){
         ZObstacle -= 2
         obstacle.position.z = ZObstacle
         if(ZObstacle >= -150){
@@ -249,13 +271,18 @@ function moveObstacles(obstacle){
     }
 }
 
+/*
+to get a random X axis value
+*/
 function getRandomX(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min)
 }
 
-const clock = new THREE.Clock()
+/*
+to refresh the renderer
+*/
 function animate() {
     requestAnimationFrame(animate)
     if(mixer){
@@ -270,6 +297,9 @@ function animate() {
     renderer.render(scene, camera)
 }
 
+/*
+to detect a collision with obstacles
+*/
 function collisionIsDetected(){
     const zmax = ZObstacle - radiusObstacle - (radiusObstacle/10)*1.5
     const zmin = ZObstacle - radiusObstacle - (radiusObstacle/10)*1.5
@@ -284,12 +314,18 @@ function collisionIsDetected(){
     )
 }
 
+/*
+stop the game
+*/
 function stop(){
     game = false
     document.getElementById('modal').style.display = "inline-flex"
     document.getElementById('canvas').style.visibility = "hidden"
 }
 
+/*
+start or restart the game
+*/
 function restart(){
     if(obstacleToRemove != null){
         scene.remove(obstacleToRemove)
@@ -303,5 +339,3 @@ function restart(){
     generateObstacles()
 }
 
-
-document.getElementById('play').addEventListener('click', ()=>{ restart()})
