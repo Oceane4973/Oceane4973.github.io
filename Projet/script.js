@@ -48,7 +48,7 @@ if(detectMob()){
         if(Math.abs(event.beta)>90) g = -g
         let x = g/Math.max(0.25,b)
         smoothx = smoothx*0.7+x*0.3
-        moveTo(-smoothx*2, 0.4*(smoothx/Math.abs(smoothx)))
+        moveTo(-smoothx*2, -0.4*(smoothx/Math.abs(smoothx)))
         console.log(spiderMesh.position)
     })
 } else {
